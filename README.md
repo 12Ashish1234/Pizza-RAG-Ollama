@@ -61,6 +61,17 @@ A local Retrieval-Augmented Generation (RAG) application that answers questions 
 2.  **Access the App**:
     Open [http://localhost:8000](http://localhost:8000)
 
+    Open [http://localhost:8000](http://localhost:8000)
+
+## CI/CD and Docker Hub
+
+This repository includes a GitHub Actions workflow that automatically builds and pushes the Docker image to Docker Hub.
+
+**Configuration Required:**
+To enable this, go to your repository's **Settings > Secrets and variables > Actions** and add:
+- `DOCKERHUB_USERNAME`: Your Docker Hub username.
+- `DOCKERHUB_TOKEN`: A Docker Hub Access Token.
+
 ## Project Structure
 
 -   `server.py`: FastAPI backend that handles chat requests.
