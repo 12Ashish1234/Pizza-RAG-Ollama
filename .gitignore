@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.env/
+venv/
+.venv/
+
+# Environment Variables
+.env
+
+# Database
+.chroma_langchain_db/
+
+# Serialized Objects
+*.pkl
+
+# OS Files
+.DS_Store
+
+# Office / Temporary Files
+.~lock.*
