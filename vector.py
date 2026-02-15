@@ -9,7 +9,8 @@ import pickle
 
 df = pd.read_csv("realistic_restaurant_reviews.csv")
 
-embeddings = OllamaEmbeddings(model="mxbai-embed-large")
+ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+embeddings = OllamaEmbeddings(model="mxbai-embed-large", base_url=ollama_base_url)
 
 db_location = ".chroma_langchain_db"
 bm25_pickle_file = "bm25_retriever.pkl"

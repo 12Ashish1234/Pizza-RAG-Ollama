@@ -52,6 +52,15 @@ A local Retrieval-Augmented Generation (RAG) application that answers questions 
     -   "Do they have good vegan options?"
     -   "What do people say about the service?"
 
+## Docker Usage
+
+1.  **Build and Run**:
+    ```bash
+    docker-compose up --build
+    ```
+2.  **Access the App**:
+    Open [http://localhost:8000](http://localhost:8000)
+
 ## Project Structure
 
 -   `server.py`: FastAPI backend that handles chat requests.

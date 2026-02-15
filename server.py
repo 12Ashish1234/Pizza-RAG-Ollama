@@ -5,6 +5,7 @@ from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 from vector import retriever
 import logging
+import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -14,7 +15,8 @@ app = FastAPI()
 
 # Initialize LLM and Chain
 try:
-    model = OllamaLLM(model="llama3.2")
+    ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+    model = OllamaLLM(model="llama3.2", base_url=ollama_base_url)
     
     template = """
     You are an expert in answering questions about a pizza restaurant

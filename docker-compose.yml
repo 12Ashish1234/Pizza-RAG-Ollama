@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  rag-app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+    volumes:
+      # Mount the data so it persists, if desired. 
+      # Note: Rebuilding the vector store inside the container might be preferred for clean state.
+      # For now, we persisting the chroma db and pickle file to a volume or host path could be tricky due to platform diffs.
+      # We will rely on the app rebuilding them if they don't exist in the container.
+      - ./realistic_restaurant_reviews.csv:/app/realistic_restaurant_reviews.csv
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
