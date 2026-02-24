@@ -1,8 +1,8 @@
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
-from vector import retriever
+from src.vector import retriever
 
-model = OllamaLLM(model="llama3.2")
+model = OllamaLLM(model="deepseek-v3.2:cloud")
 
 template = """
 You are an expert in answering questions about a pizza restaurant

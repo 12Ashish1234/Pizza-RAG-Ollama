@@ -26,5 +26,5 @@ EXPOSE 8000
 # This can be overridden by docker-compose or run command
 ENV OLLAMA_BASE_URL="http://host.docker.internal:11434"
 
-# Run server.py when the container launches
-CMD ["python", "server.py"]
+# Run server.py as a module when the container launches
+CMD ["python", "-m", "src.server"]

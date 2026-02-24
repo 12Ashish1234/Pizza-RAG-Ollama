@@ -1,5 +1,6 @@
 :root {
-    --primary-color: #FF5722; /* Pizza Orange */
+    --primary-color: #FF5722;
+    /* Pizza Orange */
     --secondary-color: #FFF3E0;
     --background-color: #f5f7fb;
     --chat-bg: #ffffff;
@@ -9,6 +10,21 @@
     --message-bot-bg: #f0f2f5;
     --message-bot-text: #333333;
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --border-color: #eee;
+    --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+    --primary-color: #FF7043;
+    /* slightly lighter orange for dark mode contrast */
+    --secondary-color: #2D3748;
+    --background-color: #1A202C;
+    --chat-bg: #2D3748;
+    --text-color: #F7FAFC;
+    --message-bot-bg: #4A5568;
+    --message-bot-text: #F7FAFC;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    --border-color: #4A5568;
 }
 
 * {
@@ -25,6 +41,7 @@ body {
     align-items: center;
     height: 100vh;
     color: var(--text-color);
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 .app-container {
@@ -37,24 +54,62 @@ body {
     height: 90vh;
     display: flex;
     flex-direction: column;
+    transition: background-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
 header {
     background-color: var(--chat-bg);
     padding: 20px;
-    border-bottom: 1px solid #eee;
-    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-titles {
+    text-align: left;
 }
 
 header h1 {
     font-size: 1.5rem;
     color: var(--primary-color);
     margin-bottom: 5px;
+    transition: color var(--transition-speed) ease;
 }
 
 header p {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-color);
+    opacity: 0.7;
+    transition: color var(--transition-speed) ease;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, color var(--transition-speed);
+}
+
+.theme-toggle:hover {
+    background-color: var(--border-color);
+    transform: none;
+    /* Override default button scaling */
+}
+
+.theme-icon {
+    transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .chat-container {
@@ -82,6 +137,7 @@ header p {
     color: var(--message-bot-text);
     align-self: flex-start;
     border-bottom-left-radius: 4px;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 .user-message {
@@ -89,6 +145,7 @@ header p {
     color: var(--message-user-text);
     align-self: flex-end;
     border-bottom-right-radius: 4px;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 .loading-dots {
@@ -110,30 +167,46 @@ header p {
     animation: bounce 1.4s infinite ease-in-out both;
 }
 
-.dot:nth-child(1) { animation-delay: -0.32s; }
-.dot:nth-child(2) { animation-delay: -0.16s; }
+.dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
 
 @keyframes bounce {
-    0%, 80%, 100% { transform: scale(0); }
-    40% { transform: scale(1); }
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+
+    40% {
+        transform: scale(1);
+    }
 }
 
 .input-area {
     padding: 20px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--border-color);
     display: flex;
     gap: 10px;
     background-color: var(--chat-bg);
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
 }
 
 input {
     flex: 1;
     padding: 12px 16px;
-    border: 2px solid #eee;
+    border: 2px solid var(--border-color);
     border-radius: 25px;
     outline: none;
     font-size: 1rem;
-    transition: border-color 0.3s;
+    background-color: transparent;
+    color: var(--text-color);
+    transition: border-color 0.3s, color var(--transition-speed) ease;
     font-family: inherit;
 }
 
@@ -165,7 +238,8 @@ button:active {
 }
 
 button svg {
-    margin-left: 2px; /* Visual adjustment for send icon */
+    margin-left: 2px;
+    /* Visual adjustment for send icon */
 }
 
 /* Scrollbar styling */

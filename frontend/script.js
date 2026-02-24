@@ -1,6 +1,58 @@
 const chatContainer = document.getElementById('chat-container');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
+const themeToggle = document.getElementById('theme-toggle');
+const themeIconLight = document.getElementById('theme-icon-light');
+const themeIconDark = document.getElementById('theme-icon-dark');
+
+// Theme state initialization
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+
+    // Check if the user has a saved theme, otherwise check OS preference
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcons(savedTheme);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        updateThemeIcons('dark');
+    }
+}
+
+function updateThemeIcons(theme) {
+    if (theme === 'dark') {
+        themeIconLight.style.display = 'none';
+        themeIconDark.style.display = 'block';
+    } else {
+        themeIconLight.style.display = 'block';
+        themeIconDark.style.display = 'none';
+    }
+}
+
+// Toggle theme on click
+themeToggle.addEventListener('click', () => {
+    let currentTheme = document.documentElement.getAttribute('data-theme');
+    let targetTheme = 'light';
+
+    if (currentTheme !== 'dark') {
+        targetTheme = 'dark';
+    }
+
+    // Toggle the theme with a brief transform scale animation
+    themeIconLight.style.transform = 'scale(0)';
+    themeIconDark.style.transform = 'scale(0)';
+
+    setTimeout(() => {
+        document.documentElement.setAttribute('data-theme', targetTheme);
+        localStorage.setItem('theme', targetTheme);
+        updateThemeIcons(targetTheme);
+
+        themeIconLight.style.transform = 'scale(1)';
+        themeIconDark.style.transform = 'scale(1)';
+    }, 150); // Small delay to sync with CSS flip
+});
+
+initTheme();
 
 function addMessage(content, isUser = false) {
     const messageDiv = document.createElement('div');
@@ -52,7 +104,7 @@ async function handleSendMessage() {
         });
 
         const data = await response.json();
-        
+
         // Remove loading state
         removeLoadingIndicator(loadingIndicator);
 
