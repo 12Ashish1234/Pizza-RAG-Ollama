@@ -3,11 +3,14 @@ from langchain_chroma import Chroma
 from langchain_community.retrievers import BM25Retriever
 from langchain_classic.retrievers import EnsembleRetriever
 from langchain_core.documents import Document
+from langchain_classic.retrievers import ContextualCompressionRetriever
+from langchain_community.document_compressors.flashrank_rerank import FlashrankRerank
 import os
 import pandas as pd
 import pickle
 
-df = pd.read_csv("realistic_restaurant_reviews.csv")
+# df = pd.read_csv("realistic_restaurant_reviews.csv")
+df = pd.read_csv("restaurant_reviews_500.csv")
 
 ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 embeddings = OllamaEmbeddings(model="mxbai-embed-large", base_url=ollama_base_url)
@@ -44,13 +47,18 @@ if os.path.exists(bm25_pickle_file):
         bm25_retriever = pickle.load(f)
 else:
     bm25_retriever = BM25Retriever.from_documents(documents)
-    bm25_retriever.k = 5
+    bm25_retriever.k = 10
     with open(bm25_pickle_file, "wb") as f:
         pickle.dump(bm25_retriever, f)
 
-chroma_retriever = vector_store.as_retriever(search_kwargs={"k": 5})
+chroma_retriever = vector_store.as_retriever(search_kwargs={"k": 10})
 
-retriever = EnsembleRetriever(
+ensemble_retriever = EnsembleRetriever(
     retrievers=[bm25_retriever, chroma_retriever],
     weights=[0.5, 0.5]
+)
+
+compressor = FlashrankRerank()
+retriever = ContextualCompressionRetriever(
+    base_compressor=compressor, base_retriever=ensemble_retriever
 )

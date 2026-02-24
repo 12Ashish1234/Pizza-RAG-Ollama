@@ -6,3 +6,4 @@ fastapi
 uvicorn
 rank_bm25
 langchain-community
+flashrank
