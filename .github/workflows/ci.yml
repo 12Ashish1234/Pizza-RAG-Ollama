@@ -31,8 +31,7 @@ jobs:
     # properly testing the app requires Ollama service which is not available here
     - name: Syntax Check
       run: |
-        python -m py_compile server.py
-        python -m py_compile vector.py
+        python -m compileall src/
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
